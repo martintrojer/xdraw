@@ -1,0 +1,103 @@
+:root {
+  color-scheme: light;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f3f0e8;
+  color: #1f2937;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(245, 158, 11, 0.18), transparent 28%),
+    radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 24%),
+    #f3f0e8;
+}
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  background: rgba(255, 252, 245, 0.88);
+  border-bottom: 1px solid rgba(120, 113, 108, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.meta strong,
+.meta span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta span {
+  color: #57534e;
+  font-size: 14px;
+}
+
+.canvas {
+  flex: 1;
+  min-height: 0;
+}
+
+.save-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: #1d4ed8;
+  color: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.save-button.saved {
+  background: #15803d;
+}
+
+.save-button.error {
+  background: #b91c1c;
+}
+
+.loading-card {
+  margin: auto;
+  padding: 20px 24px;
+  border-radius: 16px;
+  background: rgba(255, 252, 245, 0.92);
+  box-shadow: 0 18px 50px rgba(28, 25, 23, 0.12);
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .save-button {
+    width: 100%;
+  }
+}

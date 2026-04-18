@@ -1,36 +1,34 @@
 {
-  "name": "excalidraw-server",
-  "version": "0.2.2",
-  "description": "Next.js version of Excalidraw webapp",
-  "scripts": {
-    "dev": "next dev -p 9876",
-    "build": "node scripts/build-standalone.js",
-    "build:next": "next build",
-    "start": "next start -p 9876",
-    "rebuild-metadata": "node scripts/rebuild-metadata.js",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+  "name": "xdraw",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Minimal Excalidraw CLI that opens files in your system browser",
+  "type": "module",
+  "bin": {
+    "xdraw": "./bin/xdraw.mjs"
   },
-  "keywords": [],
-  "author": "",
+  "scripts": {
+    "build": "vite build && node scripts/copy-assets.mjs",
+    "dev": "vite",
+    "start": "node bin/xdraw.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "excalidraw",
+    "cli"
+  ],
   "license": "MIT",
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.0",
-    "lowdb": "^7.0.1",
-    "next": "^16.1.1",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "uuid": "^13.0.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.0",
     "@types/node": "^25.0.3",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.2",
-    "eslint-config-next": "^16.1.1",
-    "prettier": "^3.7.4",
-    "typescript": "^5.9.3"
+    "@types/react": "^18.3.24",
+    "@types/react-dom": "^18.3.7",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12"
   }
 }
