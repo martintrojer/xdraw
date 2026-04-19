@@ -13,6 +13,8 @@
     "build:exe": "bun build --compile --root . ./bin/xdraw.ts --outfile dist/xdraw",
     "compile": "bun build --compile --root . ./bin/xdraw.ts --outfile dist/xdraw",
     "dev": "bun --hot ./bin/xdraw.ts",
+    "format": "bunx prettier --write .",
+    "format:check": "bunx prettier --check .",
     "start": "./bin/xdraw.ts",
     "typecheck": "tsc --noEmit"
   },
