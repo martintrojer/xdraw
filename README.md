@@ -2,7 +2,7 @@
 
 Minimal Excalidraw file editor.
 
-No database. No list page. No Next.js. One job only:
+No database. No list page. One job only:
 
 - open one `.excalidraw` file in system browser
 - save back to same file
@@ -11,8 +11,7 @@ No database. No list page. No Next.js. One job only:
 ## Install
 
 ```bash
-npm install
-npm run build
+bun install
 ```
 
 ## Use
@@ -20,21 +19,36 @@ npm run build
 Open existing file:
 
 ```bash
-node bin/xdraw.mjs diagram.excalidraw
+bun run start -- diagram.excalidraw
 ```
 
 Create new file:
 
 ```bash
-node bin/xdraw.mjs new sketch.excalidraw
+bun run start -- new sketch.excalidraw
 ```
 
-Both commands launch default browser and keep tiny local server running for save/load.
+Both commands launch default browser and keep tiny local Bun server running for save/load.
+
+## Build
+
+Ahead-of-time Bun bundle:
+
+```bash
+bun run build
+```
+
+Single-file executable:
+
+```bash
+bun run build:exe
+./dist/xdraw diagram.excalidraw
+```
 
 ## Notes
 
 - `Ctrl+S` / `Cmd+S` saves
 - file path without extension gets `.excalidraw` added
 - `new` fails if file already exists
-- browser app served from local `dist/`, so build first
+- frontend assets are bundled from `src/index.html` by Bun
 - set `XDRAW_NO_OPEN=1` to skip browser launch during testing

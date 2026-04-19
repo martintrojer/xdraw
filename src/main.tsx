@@ -1,20 +1,15 @@
-import { Excalidraw } from '@excalidraw/excalidraw';
-import type {
-  AppState,
-  BinaryFiles,
-  ExcalidrawImperativeAPI,
-} from '@excalidraw/excalidraw/types';
-import '@excalidraw/excalidraw/index.css';
+import { Excalidraw, restore, serializeAsJSON, THEME } from '@excalidraw/excalidraw';
+import type { AppState, BinaryFiles, ExcalidrawImperativeAPI } from '@excalidraw/excalidraw/types';
+import type { ExcalidrawElement } from '@excalidraw/excalidraw/element/types';
 import { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import './styles.css';
 
 type SceneResponse = {
   path: string;
   basename: string;
   isNewFile: boolean;
   scene: {
-    elements?: readonly unknown[];
+    elements?: readonly ExcalidrawElement[];
     appState?: Partial<AppState>;
     files?: BinaryFiles;
   };
@@ -27,6 +22,7 @@ function App() {
   const sceneRef = useRef<SceneResponse | null>(null);
   const [initialData, setInitialData] = useState<SceneResponse['scene'] | null>(null);
   const [basename, setBasename] = useState('drawing.excalidraw');
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [status, setStatus] = useState<SaveState>('idle');
   const [message, setMessage] = useState('Loading scene...');
 
@@ -38,9 +34,22 @@ function App() {
       }
 
       const data = (await response.json()) as SceneResponse;
+      const restored = restore(
+        {
+          ...data.scene,
+          appState: {
+            ...data.scene.appState,
+            collaborators: undefined,
+            showWelcomeScreen: false,
+          },
+        },
+        null,
+        null
+      );
       sceneRef.current = data;
-      setInitialData(data.scene);
+      setInitialData(restored);
       setBasename(data.basename);
+      setIsDarkMode(data.scene.appState?.theme !== 'light');
       setMessage(data.isNewFile ? 'New file. Save to write first scene.' : 'Scene loaded.');
     };
 
@@ -74,11 +83,14 @@ function App() {
     setStatus('saving');
     setMessage('Saving...');
 
-    const payload = {
-      elements: api.getSceneElementsIncludingDeleted(),
-      appState: api.getAppState(),
-      files: api.getFiles(),
-    };
+    const payload = JSON.parse(
+      serializeAsJSON(
+        api.getSceneElementsIncludingDeleted(),
+        api.getAppState(),
+        api.getFiles(),
+        'local'
+      )
+    );
 
     try {
       const response = await fetch('/api/scene', {
@@ -111,15 +123,25 @@ function App() {
   }
 
   return (
-    <div className="shell">
+    <div className={`shell ${isDarkMode ? 'dark' : 'light'}`}>
       <div className="topbar">
         <div className="meta">
           <strong>{basename}</strong>
           <span>{message}</span>
         </div>
-        <button className={`save-button ${status}`} onClick={() => void saveScene()}>
-          {status === 'saving' ? 'Saving...' : 'Save'}
-        </button>
+        <div className="actions">
+          <button
+            className="theme-toggle"
+            onClick={() => {
+              setIsDarkMode((current) => !current);
+            }}
+          >
+            {isDarkMode ? 'Light' : 'Dark'}
+          </button>
+          <button className={`save-button ${status}`} onClick={() => void saveScene()}>
+            {status === 'saving' ? 'Saving...' : 'Save'}
+          </button>
+        </div>
       </div>
       <div className="canvas">
         <Excalidraw
@@ -127,6 +149,7 @@ function App() {
             apiRef.current = api;
           }}
           initialData={initialData as any}
+          theme={isDarkMode ? THEME.DARK : THEME.LIGHT}
           UIOptions={{
             canvasActions: {
               saveToActiveFile: false,

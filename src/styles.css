@@ -1,8 +1,16 @@
+@import '../node_modules/@excalidraw/excalidraw/dist/prod/index.css';
+
 :root {
-  color-scheme: light;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #f3f0e8;
-  color: #1f2937;
+  color-scheme: dark;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
 }
 
 * {
@@ -18,26 +26,40 @@ body,
 
 body {
   background:
-    radial-gradient(circle at top left, rgba(245, 158, 11, 0.18), transparent 28%),
-    radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 24%),
-    #f3f0e8;
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.2), transparent 28%),
+    radial-gradient(circle at top right, rgba(244, 114, 182, 0.14), transparent 24%), #020617;
 }
 
 .shell {
   display: flex;
   flex-direction: column;
   height: 100%;
+  background:
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.2), transparent 28%),
+    radial-gradient(circle at top right, rgba(244, 114, 182, 0.14), transparent 24%), #020617;
+}
+
+.shell.light {
+  background:
+    radial-gradient(circle at top left, rgba(245, 158, 11, 0.18), transparent 28%),
+    radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 24%), #f3f0e8;
+  color: #1f2937;
 }
 
 .topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 12px 16px;
-  background: rgba(255, 252, 245, 0.88);
-  border-bottom: 1px solid rgba(120, 113, 108, 0.2);
+  gap: 12px;
+  padding: 8px 16px;
+  background: rgba(15, 23, 42, 0.84);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.22);
   backdrop-filter: blur(10px);
+}
+
+.shell.light .topbar {
+  background: rgba(255, 252, 245, 0.88);
+  border-bottom-color: rgba(120, 113, 108, 0.2);
 }
 
 .meta {
@@ -55,8 +77,40 @@ body {
 }
 
 .meta span {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.shell.light .meta span {
   color: #57534e;
-  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-toggle,
+.save-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 14px;
+  color: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.theme-toggle {
+  background: rgba(148, 163, 184, 0.16);
+  color: #e2e8f0;
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.18);
+}
+
+.shell.light .theme-toggle {
+  background: rgba(148, 163, 184, 0.18);
+  color: #1f2937;
 }
 
 .canvas {
@@ -65,14 +119,7 @@ body {
 }
 
 .save-button {
-  border: 0;
-  border-radius: 999px;
-  padding: 10px 16px;
   background: #1d4ed8;
-  color: white;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
 }
 
 .save-button.saved {
@@ -87,6 +134,11 @@ body {
   margin: auto;
   padding: 20px 24px;
   border-radius: 16px;
+  background: rgba(15, 23, 42, 0.92);
+  box-shadow: 0 18px 50px rgba(2, 6, 23, 0.5);
+}
+
+.shell.light .loading-card {
   background: rgba(255, 252, 245, 0.92);
   box-shadow: 0 18px 50px rgba(28, 25, 23, 0.12);
 }
@@ -97,7 +149,12 @@ body {
     flex-direction: column;
   }
 
-  .save-button {
+  .actions {
     width: 100%;
+  }
+
+  .theme-toggle,
+  .save-button {
+    flex: 1;
   }
 }
