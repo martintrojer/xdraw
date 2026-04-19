@@ -10,27 +10,29 @@ No database. No list page. One job only:
 
 ## Install
 
-```bash
-bun install
-```
+Download the single-file executable from the Release page or build for source (see below).
 
 ## Use
 
 Open existing file:
 
 ```bash
-bun run start -- diagram.excalidraw
+xdraw diagram.excalidraw
 ```
 
 Create new file:
 
 ```bash
-bun run start -- new sketch.excalidraw
+xdraw new sketch.excalidraw
 ```
 
 Both commands launch default browser and keep tiny local Bun server running for save/load.
 
-## Build
+### Build
+
+```bash
+bun install
+```
 
 Ahead-of-time Bun bundle:
 
